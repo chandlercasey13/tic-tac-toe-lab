@@ -1,4 +1,6 @@
-/*-------------------------------- Constants --------------------------------*/
+/*-------------------------------- Event Listeners --------------------------------*/
+//found out how to add event listener on load online
+window.addEventListener("load", initalize);
 
 /*---------------------------- Variables (state) ----------------------------*/
 let board = ["", "", "", "", "", "", "", "", ""];
@@ -17,27 +19,22 @@ const winCombos = [
   [2, 4, 6],
 ];
 /*------------------------ Cached Element References ------------------------*/
-const button = document.querySelector('#reset-button')
-
+const button = document.querySelector("#reset-button");
 
 const squareEls = document.querySelectorAll(".sqr");
 squareEls.forEach((tile) => {
   tile.addEventListener("click", handleClick);
 });
 
-
-
-
+/*--------------------------------Functions-----------------------------*/
 const initalize = function init() {
-  
   board = ["", "", "", "", "", "", "", "", ""];
   turn = "X";
   winner = false;
   tie = false;
   render();
-}
+};
 
-window.addEventListener('load', initalize)
 function render() {
   updateBoard();
   updateMessage();
@@ -45,37 +42,33 @@ function render() {
 
 function updateBoard() {
   board.forEach((square, idx) => {
-    square= squareEls[idx].textContent
-    
-   
-    
+    square = squareEls[idx].textContent;
   });
 
-  console.log(board)
+  console.log(board);
 }
 
 function updateMessage() {
   const message = document.querySelector("#message");
   if (winner === false && tie === false) {
     message.textContent = `${turn}'s turn`;
-  } if (winner === false && tie === true) {
-    message.textContent ='Tie';
-  } if (winner === true){
-    message.textContent = `${turn} Wins!`
-   } if (turn === ''){
-    message.textContent='Pick a tile!'
-   }
-    }
-  
-
+  }
+  if (winner === false && tie === true) {
+    message.textContent = "Tie";
+  }
+  if (winner === true) {
+    message.textContent = `${turn} Wins!`;
+  }
+  if (turn === "") {
+    message.textContent = "Pick a tile!";
+  }
+}
 
 function handleClick(event) {
-   if (winner || tie ){
-    return
-   }
+  if (winner || tie) {
+    return;
+  }
   placePiece(event.target.id);
-  
-  
 }
 
 function placePiece(index) {
@@ -83,8 +76,8 @@ function placePiece(index) {
   squareEls[index].textContent = turn;
 
   console.log(board);
-  
-  checkForWinner()
+
+  checkForWinner();
   checkForTie();
   switchPlayerTurn();
 }
@@ -98,21 +91,19 @@ function switchPlayerTurn() {
   } else {
     turn = "X";
   }
-  
+
   updateMessage();
 }
 
 function checkForTie() {
-  if (winner){
-    return
+  if (winner) {
+    return;
   }
-  if (board.includes('')){
-    tie = false
+  if (board.includes("")) {
+    tie = false;
   } else {
     tie = true;
-    
   }
-  
 }
 
 function checkForWinner() {
@@ -126,22 +117,19 @@ function checkForWinner() {
     }
     if (a === b && b === c) {
       winner = true;
-      updateMessage()
+      updateMessage();
     }
   }
 }
 
-
-button.addEventListener('click',resetButton)
+button.addEventListener("click", resetButton);
 
 function resetButton() {
   board = ["", "", "", "", "", "", "", "", ""];
-  turn = ''
+  turn = "";
   squareEls.forEach((tile) => {
-    tile.textContent='';
-    initalize()
+    tile.textContent = "";
   });
-  
-  updateMessage()
-  console.log(board)
+  initalize();
+  updateMessage();
 }
