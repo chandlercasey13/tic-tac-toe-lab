@@ -1,6 +1,5 @@
 /*-------------------------------- Event Listeners --------------------------------*/
-//found out how to add event listener on load online
-window.addEventListener("load", initalize);
+
 
 /*---------------------------- Variables (state) ----------------------------*/
 let board = ["", "", "", "", "", "", "", "", ""];
@@ -29,12 +28,13 @@ squareEls.forEach((tile) => {
 /*--------------------------------Functions-----------------------------*/
 const initalize = function init() {
   board = ["", "", "", "", "", "", "", "", ""];
-  turn = "X";
+  turn = "";
   winner = false;
   tie = false;
   render();
 };
-
+//found out how to add event listener on load online
+window.addEventListener("load", initalize);
 function render() {
   updateBoard();
   updateMessage();
